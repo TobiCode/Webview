@@ -1,14 +1,12 @@
 var data = [
-  ['Gemues', 'Preis[Euro]', 'Menge[kg]'],
+  ['Gemuese', 'Preis[Euro]', 'Menge[kg]'],
   ['Tomaten', '1', '1'],
   ['Karotten', '0.5', '1'],
   ['Aepfel', '2', '4'],
   ['Kartoffeln', '3', '9'],
 ];
 
-var sortingArray;
-
-function buildTable(data) {
+function buildTable(data, order) {
   try {
     var old_table = document.getElementById('gemueseTable');
     old_table.parentNode.removeChild(old_table);
@@ -27,99 +25,23 @@ function buildTable(data) {
 
     for (var j = 0; j < row.length; j++) {
       if (i == 0) {
-        table += '<th id = "' + row[j] + ' "' + 'onclick=sort_2d_asc(data,' + j + ')>';
+        if (order == '') {
+          table += '<th id = "' + row[j] + ' "' + 'onclick=sort_2d_asc(data,' + j + ')>';
+        } else if (order == 'asc') {
+          table += '<th id = "' + row[j] + ' "' + 'onclick=sort_2d_desc(data,' + j + ')>';
+        } else if (order == 'desc') {
+          table += '<th id = "' + row[j] + ' "' + 'onclick=sort_2d_asc(data,' + j + ')>';
+        }
 
         table += row[j];
-        table += "&#9660";
-        table += "	&#9650"
-        table += '</th>';
-      } else {
-        table += '<td contenteditable=true onBlur=saveChanges()>';
-        table += row[j];
-        table += '</td>';
-      }
-    }
-
-    if (i == 0) {
-      table += '</tr>';
-      table += '</thead>';
-      table += '<tbody>';
-    } else {
-      table += '</tr>';
-    }
-  }
-  table += '</tbody>';
-  table += '</table>';
-  document.body.innerHTML += table;
-}
-
-function buildTableNextDesc(data) {
-  try {
-    var old_table = document.getElementById('gemueseTable');
-    old_table.parentNode.removeChild(old_table);
-  } catch (err) {
-    console.log("No table existing yet");
-  }
-  var table = '<table id = "gemueseTable">';
-  for (var i = 0; i < data.length; i++) {
-    var row = data[i];
-    if (i == 0) {
-      table += '<thead>';
-      table += '<tr>';
-    } else {
-      table += '<tr>';
-    }
-
-    for (var j = 0; j < row.length; j++) {
-      if (i == 0) {
-        table += '<th id = "' + row[j] + ' "' + 'onclick=sort_2d_desc(data,' + j + ')>';
-
-        table += row[j];
-        table += "	&#9650"
-        table += '</th>';
-      } else {
-        table += '<td contenteditable=true onBlur=saveChanges()>';
-        table += row[j];
-        table += '</td>';
-      }
-    }
-
-    if (i == 0) {
-      table += '</tr>';
-      table += '</thead>';
-      table += '<tbody>';
-    } else {
-      table += '</tr>';
-    }
-  }
-  table += '</tbody>';
-  table += '</table>';
-  document.body.innerHTML += table;
-}
-
-function buildTableNextAsc(data) {
-  try {
-    var old_table = document.getElementById('gemueseTable');
-    old_table.parentNode.removeChild(old_table);
-  } catch (err) {
-    console.log("No table existing yet");
-  }
-  var table = '<table id = "gemueseTable">';
-  for (var i = 0; i < data.length; i++) {
-    var row = data[i];
-    if (i == 0) {
-      table += '<thead>';
-      table += '<tr>';
-    } else {
-      table += '<tr>';
-    }
-
-    for (var j = 0; j < row.length; j++) {
-      if (i == 0) {
-        table += '<th id = "' + row[j] + ' "' + 'onclick=sort_2d_asc(data,' + j + ')>';
-
-        table += row[j];
-        table += "	&#9660"
+        if (order == '') {
+          table += "&#9660";
+          table += "&#9650";
+        } else if (order == 'asc') {
+          table += "&#9650";
+        } else if (order == 'desc') {
+          table += "&#9660";
+        }
         table += '</th>';
       } else {
         table += '<td contenteditable=true onBlur=saveChanges()>';
@@ -233,7 +155,7 @@ function sort_2d_desc(twoDArray, column) {
   }
   data = arrayToSort;
   data.unshift(headerArray);
-  buildTableNextAsc(data);
+  buildTable(data, 'desc');
   return data;
 }
 
@@ -269,6 +191,6 @@ function sort_2d_asc(twoDArray, column) {
   }
   data = arrayToSort;
   data.unshift(headerArray);
-  buildTableNextDesc(data);
+  buildTable(data, 'asc');
   return data;
 }
