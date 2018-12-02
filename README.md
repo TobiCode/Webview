@@ -12,6 +12,6 @@ JS, HTML, CSS
 ## Main Focus of this project
 
 The main File is the javascript file.
-It contains the methods to build a HTML Table, provides emthods for sorting, ... <br>
+It contains the methods to build a HTML Table, provides methods for sorting, ... <br>
 
 <img src="Preview.PNG" height="200px" title="Preview of APP">
